@@ -63,7 +63,8 @@
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0",
     "shortid": "^2.2.12",
-    "styled-components": "^3.3.3"
+    "styled-components": "^3.3.3",
+    "underscore": "^1.9.1"
   },
   "jest": {
     "setupFiles": [

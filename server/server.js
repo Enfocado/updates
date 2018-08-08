@@ -4,6 +4,8 @@ const Log = require('log');
 
 const db = require('../db/db');
 
+const _ = require('underscore');
+
 const log = new Log();
 
 const app = express();
@@ -11,7 +13,7 @@ const port = process.env.PORT || 3004;
 
 app.use(express.static('client/dist'));
 
-app.get('/projects/:id', (req, res) => {
+app.get('/projects/:ids', (req, res) => {
   db.query(`SELECT backers,date_created,ending_date,goal,money_raised FROM projects WHERE id=${req.params.id}`, (error, results) => {
     const project = {
       dateCreated: results[0].date_created,
@@ -38,9 +40,48 @@ app.get('/projects/:id', (req, res) => {
     });
   });
 });
+// added more routes
+app.post('/projects/:ids', (req, res) => {
+  const query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES (?,?,?,?,?,${req.params.ids},?)`;
+  const {
+    title, description, update_date, comments, likes, backers_only,
+  } = req.body;
+  db.query(query, title, description, update_date, comments, likes, backers_only, (err, result ) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.sendStatus(201);
+  });
+});
+
+// delete project
+app.delete('/projects/:ids', (req, res) => {
+  const query = `DELETE FROM projects WHERE id = ${req.params.ids}`;
+  db.query(query, (err, result) => {
+    if (err) {
+      throw err;
+    }
+
+    res.redirect('/projects');
+  });
+});
+// edit project
+app.put('/projects/:ids', (req, res) => {
+  const query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES (?,?,?,?,?,${req.params.ids},?)`;
+   const {
+    title, description, update_date, comments, likes, backers_only,
+  } = req.body;
+   db.query(query, title, description, update_date, comments, likes, backers_only, (err, result ) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.sendStatus(201);
+  });
+});
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, log.info(`server running on port ${port}`));
 }
 
 module.exports = app;
+

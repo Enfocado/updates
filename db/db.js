@@ -5,14 +5,14 @@ const Log = require('log');
 const log = new Log();
 
 const connection = mysql.createConnection({
-  host: 'db',
+  host: 'localhost',
   user: 'root',
   database: 'update_feature',
 });
 
 connection.connect((err) => {
   if (err) {
-    log.error(`error connecting: ${err.stack}`);
+    log.error(`error connecting : ${err.stack}`);
   } else {
     log.info(`connected at ${connection.threadId}`);
   }
