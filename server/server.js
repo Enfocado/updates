@@ -13,7 +13,7 @@ const port = process.env.PORT || 3004;
 
 app.use(express.static('client/dist'));
 
-app.get('/projects/:ids', (req, res) => {
+app.get('/projects/:id', (req, res) => {
   db.query(`SELECT backers,date_created,ending_date,goal,money_raised FROM projects WHERE id=${req.params.id}`, (error, results) => {
     const project = {
       dateCreated: results[0].date_created,
@@ -41,12 +41,12 @@ app.get('/projects/:ids', (req, res) => {
   });
 });
 // added more routes
-app.post('/projects/:ids', (req, res) => {
-  const query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES (?,?,?,?,?,${req.params.ids},?)`;
+app.post('/projects/:id', (req, res) => {
+  const query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES (?,?,?,?,?,${req.params.id},?)`;
   const {
     title, description, update_date, comments, likes, backers_only,
   } = req.body;
-  db.query(query, title, description, update_date, comments, likes, backers_only, (err, result ) => {
+  db.query(query, [title, description, update_date, comments, likes, backers_only], (err, result ) => {
     if (err) {
       return res.status(500).send(err);
     }
@@ -55,8 +55,8 @@ app.post('/projects/:ids', (req, res) => {
 });
 
 // delete project
-app.delete('/projects/:ids', (req, res) => {
-  const query = `DELETE FROM projects WHERE id = ${req.params.ids}`;
+app.delete('/projects/:id', (req, res) => {
+  const query = `DELETE FROM projects WHERE id = ${req.params.id}`;
   db.query(query, (err, result) => {
     if (err) {
       throw err;
@@ -66,12 +66,12 @@ app.delete('/projects/:ids', (req, res) => {
   });
 });
 // edit project
-app.put('/projects/:ids', (req, res) => {
-  const query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES (?,?,?,?,?,${req.params.ids},?)`;
+app.put('/projects/:id', (req, res) => {
+  const query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES (?,?,?,?,?,${req.params.id},?)`;
    const {
     title, description, update_date, comments, likes, backers_only,
   } = req.body;
-   db.query(query, title, description, update_date, comments, likes, backers_only, (err, result ) => {
+   db.query(query, [title, description, update_date, comments, likes, backers_only], (err, result ) => {
     if (err) {
       return res.status(500).send(err);
     }
