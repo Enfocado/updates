@@ -4,8 +4,6 @@ const Log = require('log');
 
 const db = require('../db/db');
 
-const _ = require('underscore');
-
 const log = new Log();
 
 const app = express();
@@ -13,7 +11,8 @@ const port = process.env.PORT || 3004;
 
 app.use(express.static('client/dist'));
 
-app.get('/projects/:id', (req, res) => {
+//get all updates
+app.get('/projects/:id/updates', (req, res) => {
   db.query(`SELECT backers,date_created,ending_date,goal,money_raised FROM projects WHERE id=${req.params.id}`, (error, results) => {
     const project = {
       dateCreated: results[0].date_created,
@@ -40,6 +39,12 @@ app.get('/projects/:id', (req, res) => {
     });
   });
 });
+
+// get update item
+app.get('/projects/:id/updates/:updateid', (req,res) =>{
+  db.query(`SELECT * FROM updates WHERE project_id = ${req.params.id} AND id = ${req.params.updateid}` )
+})
+
 // added more routes
 app.post('/projects/:id', (req, res) => {
   const query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES (?,?,?,?,?,${req.params.id},?)`;
@@ -55,18 +60,18 @@ app.post('/projects/:id', (req, res) => {
 });
 
 // delete project
-app.delete('/projects/:id', (req, res) => {
-  const query = `DELETE FROM projects WHERE id = ${req.params.id}`;
+app.delete('/projects/:id/updates/:updateid', (req, res) => {
+  const query = `DELETE FROM updates WHERE project_id = ${req.params.id}`;
   db.query(query, (err, result) => {
     if (err) {
       throw err;
     }
 
-    res.redirect('/projects');
+    res.send('deleted project');
   });
 });
 // edit project
-app.put('/projects/:id', (req, res) => {
+app.put('/projects/:id/updates/:updateid', (req, res) => {
   const query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES (?,?,?,?,?,${req.params.id},?)`;
    const {
     title, description, update_date, comments, likes, backers_only,
