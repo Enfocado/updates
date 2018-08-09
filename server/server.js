@@ -46,7 +46,7 @@ app.get('/projects/:id/updates/:updateid', (req,res) =>{
 })
 
 // added more routes
-app.post('/projects/:id', (req, res) => {
+app.post('/projects/:id/updates/add', (req, res) => {
   const query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES (?,?,?,?,?,${req.params.id},?)`;
   const {
     title, description, update_date, comments, likes, backers_only,
