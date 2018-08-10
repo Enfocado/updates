@@ -1,26 +1,18 @@
 const fs = require('fs');
 const faker = require('faker');
 
-const stream = fs.createWriteStream('/Users/Dilsher/Desktop/SDC/updates/updates10.txt');
+const stream = fs.createWriteStream('updates.csv');
 
 
 stream.once('open', () => {
-    const updates = []
-    for (let i = 4500000; i < 5000000; i++) {
-        updates.push({
-            id : i,
-            title: faker.lorem.word(),
-            description: faker.lorem.sentence(),
-            update_date: faker.date.between('2018-06-01', '2018-08-06'),
-            comments: faker.lorem.sentence(),
-            likes: faker.random.number(250),
-            project_id: faker.random.number(10),
-            backers_only: faker.random.boolean()
-        });
+    stream.write('id,title,description,update_date,comments,likes,project_id,backers_only \n', 'utf-8')
+    for (let i = 0; i < 10000000; i++) {
+        stream.write(`${i},${faker.lorem.word()},${faker.lorem.sentence()},${faker.date.recent()},${faker.lorem.sentence()},${faker.random.number(250)},${faker.random.number(10000000)},${faker.random.boolean()}\n`
+        );
     }
 
-    stream.write(JSON.stringify(updates));
+    
 
 
-    stream.end(() => console.log('saved updates 10'));
+    stream.end(() => console.log('saved updates.csv'));
 });
