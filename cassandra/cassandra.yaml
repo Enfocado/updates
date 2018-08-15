@@ -1,0 +1,48 @@
+keyspace: stresscql
+keyspace_definition: |
+  CREATE KEYSPACE stresscql WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+#
+# Table info
+#
+
+table: updates
+table_definition: |
+
+  CREATE TABLE updates (
+  id int,
+  title text,
+  description text,
+  update_date timestamp,
+  comments text,
+  likes int,
+  project_id int,
+  backers_only boolean,
+  PRIMARY KEY (project_id, update_date)
+
+columnspec:
+  - name: id 
+    population: uniform(1..10000000)
+  - name: title 
+    size: fixed(30)
+  - name: description 
+    population: uniform(250)
+  - name: update_date 
+    size: uniform()  
+  - name: comments 
+    population: uniform(250)
+  - name: project_id 
+    size: uniform(1..10000000) 
+  - name: backers_only 
+    population: uniform(1..10000000)
+   
+
+
+insert:
+  partitions: uniform(1..5)
+  batchtype: LOGGED
+  select: uniform(1..10)/10
+
+queries:
+  singlepost:
+    cql: select * from updates where project_id = ? LIMIT 100
+    fields: samerow
