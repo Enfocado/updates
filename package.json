@@ -57,6 +57,9 @@
     "moment": "^2.22.2",
     "mysql": "^2.16.0",
     "number-formatter": "^1.2.0",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "pg-promise": "^8.4.5",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -64,6 +67,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0",
+    "sequelize": "^4.38.0",
     "shortid": "^2.2.12",
     "styled-components": "^3.3.3",
     "underscore": "^1.9.1"

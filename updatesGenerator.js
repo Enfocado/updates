@@ -1,6 +1,6 @@
 const fs = require('fs');
 const faker = require('faker');
-const stream = fs.createWriteStream('updates2.csv');
+const stream = fs.createWriteStream('updates.csv');
 
 
 stream.once('open', () => {
@@ -20,12 +20,12 @@ stream.once('open', () => {
 
 		return [year, month, day].join('-');
 	}
-	for (let i = 10000001; i < 20000000; i++) {
-		stream.write(`${i},${faker.lorem.word()},${faker.lorem.sentence()},${formatDate(randomDate(new Date(2012, 0, 1), new Date()))},${faker.lorem.sentence()},${faker.random.number(250)},${faker.random.number(10000000)},${faker.random.boolean()}\n`
+	for (let i = 0; i < 10000000; i++) {
+		stream.write(`${faker.lorem.word()},${faker.lorem.sentence()},${formatDate(randomDate(new Date(2012, 0, 1), new Date()))},${faker.lorem.sentence()},${faker.random.number(250)},${faker.random.number(10000000)},${faker.random.boolean()}\n`
 			);
 	}
 
 	
-	stream.end(() => console.log('saved updates2.csv'));
+	stream.end(() => console.log('saved updates.csv'));
 });
 

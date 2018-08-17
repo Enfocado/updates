@@ -36,22 +36,22 @@ export default class App extends React.Component {
     };
   }
 
-  componentWillMount() {
-    axios.get('/projects/21')
-      .then((response) => {
-        response.data.dateCreated = new Date(response.data.dateCreated);
-        response.data.endingDate = new Date(response.data.endingDate);
-        response.data.updates.forEach((update) => {
-          update.updateDate = new Date(update.updateDate);
-          update.backersOnly = !!update.backersOnly;
-        });
-        this.setState({
-          project: response.data,
-        });
-      }).catch((error) => {
-        throw error;
-      });
-  }
+  // componentWillMount() {
+  //   axios.get('/projects/21/updates')
+  //     .then((response) => {
+  //       response.data.dateCreated = new Date(response.data.dateCreated);
+  //       response.data.endingDate = new Date(response.data.endingDate);
+  //       response.data.updates.forEach((update) => {
+  //         update.updateDate = new Date(update.updateDate);
+  //         update.backersOnly = !!update.backersOnly;
+  //       });
+  //       this.setState({
+  //         project: response.data,
+  //       });
+  //     }).catch((error) => {
+  //       throw error;
+  //     });
+  // }
 
   render() {
     const { project } = this.state;

@@ -21,7 +21,8 @@ table_definition: |
 
 columnspec:
   - name: id 
-    population: uniform(1..10000000)
+    size: gaussian(1..)
+    population: ga(1..10000000)
   - name: title 
     size: fixed(30)
   - name: description 
