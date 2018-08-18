@@ -21,12 +21,19 @@ const postUpdates = (title, description, update_date, comments, likes, project_i
     let query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES ('${title}', '${description}', '${update_date}', '${comments}', '${likes}', '${project_id}', ${backers_only})`;
     pool.query(query, (err, res) => {
       if (err) console.log(err);
-        console.log('UPDATE POSTED');
+        console.log('update posted');
         cb(res);
       });
 };
 
-
+const updateDescription = (description, id, cb) => {
+	let query = `UPDATE updates SET description = '${description}' WHERE id = ${id}`;
+	pool.query(query, (err, res) => {
+      if (err) console.log(err);
+        console.log('description updated');
+        cb(res);
+	});
+}
 
 client.connect();
 
@@ -34,6 +41,6 @@ module.exports = {
 	pool,
 	client,
 	postUpdates,
-	// getUpdates
+	updateDescription
 }
 

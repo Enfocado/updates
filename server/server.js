@@ -56,7 +56,6 @@ app.get('/projects/:id/updates', (req,res) =>{
 // added more routes
 app.post('/projects/:id/updates/add', (req, res) => {
   db.postUpdates(req.body.title, req.body.description, req.body.update_date,req.body.comments,req.body.likes,req.body.project_id, req.body.backers_only, (result) => (res.send(result)));
-  console.log(req.body.title);
 });
 // delete project
 app.delete('/projects/:id/updates/:updateid', (req, res) => {
@@ -69,19 +68,11 @@ app.delete('/projects/:id/updates/:updateid', (req, res) => {
     res.send('deleted project');
   });
 });
-// // edit project
-// app.put('/projects/:id/updates/:updateid', (req, res) => {
-//   const query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES (?,?,?,?,?,${req.params.id},?)`;
-//    const {
-//     title, description, update_date, comments, likes, backers_only,
-//   } = req.body;
-//    db.query(query, [title, description, update_date, comments, likes, backers_only], (err, result ) => {
-//     if (err) {
-//       return res.status(500).send(err);
-//     }
-//     res.sendStatus(201);
-//   });
-// });
+// edit project
+app.put('/projects/:id/updates/:updateid', (req, res) => {
+   
+   db.updateDescription(req.body.description, req.params.updateid, (result) => (res.send(result)));
+});
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, log.info(`server running on port ${port}`));
