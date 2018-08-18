@@ -45,10 +45,12 @@ app.use(bodyParser());
 
 // get update item
 app.get('/projects/:id/updates', (req,res) =>{
-  db.client.query(`SELECT * FROM updates WHERE project_id = ${req.params.id} `,  (err, update) => {
+  db.client.query(`SELECT title,description,update_date,comments,likes,project_id,backers_only FROM updates WHERE project_id = ${req.params.id} `,  (err, update) => {
 
      res.json(update)
   } )
+  // const { params } = req;
+  // db.getUpdates(params.id, (results) => (res.send(results)));
 });
 
 // added more routes
@@ -56,17 +58,17 @@ app.post('/projects/:id/updates/add', (req, res) => {
   db.postUpdates(req.body.title, req.body.description, req.body.update_date,req.body.comments,req.body.likes,req.body.project_id, req.body.backers_only, (result) => (res.send(result)));
   console.log(req.body.title);
 });
-// // delete project
-// app.delete('/projects/:id/updates/:updateid', (req, res) => {
-//   const query = `DELETE FROM updates WHERE project_id = ${req.params.id}`;
-//   db.query(query, (err, result) => {
-//     if (err) {
-//       throw err;
-//     }
+// delete project
+app.delete('/projects/:id/updates/:updateid', (req, res) => {
+  const query = `DELETE FROM updates WHERE project_id = ${req.params.id}`;
+  db.client.query(query, (err, result) => {
+    if (err) {
+      throw err;
+    }
 
-//     res.send('deleted project');
-//   });
-// });
+    res.send('deleted project');
+  });
+});
 // // edit project
 // app.put('/projects/:id/updates/:updateid', (req, res) => {
 //   const query = `INSERT INTO updates (title,description,update_date,comments,likes,project_id,backers_only) VALUES (?,?,?,?,?,${req.params.id},?)`;
