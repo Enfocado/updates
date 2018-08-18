@@ -1,0 +1,95 @@
+config:
+  payload:
+    path: './favouredID.csv'
+    fields:
+      - "num" 
+  target: "http://127.0.0.1:3004"
+  phases:
+    - duration: 300
+      arrivalRate: 1
+      rampTo: 300
+      name: "warm up"
+  defaults:
+    headers:
+      x-my-service-auth: "987401838271002188298567"
+scenarios:
+  - flow:
+    # - loop:
+    #   - get:
+    #      url: "/projects/{{ num }}/updates"
+    # count: 500    
+    
+
+    - post:
+        url: "projects/22/updates/add"
+        json: 
+          title: "non"
+          description: "Asperiores consequatur occaecati qui eveniet et dignissimos cupiditate dolorem omnis."
+          update_date: "2015-02-09T08:00:00.000Z"
+          comments: "Quos error voluptas qui at accusantium alias veritatis sapiente rerum."
+          likes: 228
+          project_id: 11
+          backers_only: false
+
+    - post:
+        url: "projects/22/updates/add"
+        json: 
+          title: "non"
+          description: "Asperiores consequatur occaecati qui eveniet et dignissimos cupiditate dolorem omnis."
+          update_date: "2015-02-09T08:00:00.000Z"
+          comments: "Quos error voluptas qui at accusantium alias veritatis sapiente rerum."
+          likes: 228
+          project_id: 12
+          backers_only: false
+
+    - post:
+        url: "projects/22/updates/add"
+        json: 
+          title: "non"
+          description: "Asperiores consequatur occaecati qui eveniet et dignissimos cupiditate dolorem omnis."
+          update_date: "2015-02-09T08:00:00.000Z"
+          comments: "Quos error voluptas qui at accusantium alias veritatis sapiente rerum."
+          likes: 228
+          project_id: 13
+          backers_only: false
+
+    - post:
+        url: "projects/22/updates/add"
+        json: 
+          title: "non"
+          description: "Asperiores consequatur occaecati qui eveniet et dignissimos cupiditate dolorem omnis."
+          update_date: "2015-02-09T08:00:00.000Z"
+          comments: "Quos error voluptas qui at accusantium alias veritatis sapiente rerum."
+          likes: 228
+          project_id: 13
+    #       backers_only: false 
+
+      # - put:
+      #     url: "projects/21/updates/25"
+      #     json: 
+      #       description: "Updated: dignissimos cupiditate dolorem omnis."
+
+      # - put:
+      #     url: "projects/21/updates/150"
+      #     json: 
+      #       description: "Updated: dignissimos something else dolorem omnis." 
+
+    # - delete:
+    #     url: "/projects/11/updates"
+    # - delete:
+    #     url: "/projects/12/updates"
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+

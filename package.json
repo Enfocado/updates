@@ -56,6 +56,7 @@
     "logpath": "^0.3.4",
     "moment": "^2.22.2",
     "mysql": "^2.16.0",
+    "newrelic": "^4.8.0",
     "number-formatter": "^1.2.0",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
